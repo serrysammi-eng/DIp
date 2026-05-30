@@ -21,7 +21,7 @@ function NotFoundComponent() {
           The page you're looking for doesn't exist or has been moved.
         </p>
         <div className="mt-6">
-          <Link to="/" className="inline-flex items-center justify-center rounded-full bg-white text-black px-5 py-2.5 text-sm font-medium hover:scale-105 active:scale-95 transition-transform">
+          <Link to="/app" className="inline-flex items-center justify-center rounded-full bg-white text-black px-5 py-2.5 text-sm font-medium hover:scale-105 active:scale-95 transition-transform">
             Go home
           </Link>
         </div>
@@ -41,7 +41,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button onClick={() => { router.invalidate(); reset(); }}
             className="rounded-full bg-white text-black px-4 py-2 text-sm font-medium">Try again</button>
-          <a href="/" className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium">Go home</a>
+          <a href="/app" className="rounded-full border border-white/20 px-4 py-2 text-sm font-medium">Go home</a>
         </div>
       </div>
     </div>
