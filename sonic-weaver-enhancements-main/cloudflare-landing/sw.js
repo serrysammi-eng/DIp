@@ -1,7 +1,5 @@
-const CACHE_NAME = 'sonic-weaver-landing-v1';
+const CACHE_NAME = 'sonic-weaver-landing-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
   '/manifest.json'
 ];
 
@@ -25,6 +23,24 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  
+  // Navigation requests: ALWAYS network-first to prevent white screen
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+  
+  // Other requests: stale-while-revalidate
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) {

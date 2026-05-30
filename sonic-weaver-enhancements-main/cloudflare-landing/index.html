@@ -2,6 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){
+  var isStandalone = window.navigator.standalone ||
+    window.matchMedia('(display-mode: standalone)').matches;
+  if (isStandalone) {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.update(); });
+      });
+    }
+    window.location.replace('/app');
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Sonic Weaver — The Smartest Free Music App | AI DJ, Auto Mix, Premium Sound</title>
 <meta name="description" content="AI DJ, Auto Mix, 14 Sound FX, 3D Audio, 10-Band EQ. 100% Free. No App Store. Add to your phone in 1 tap. Better than Spotify, Apple Music & YouTube Music.">
@@ -289,7 +303,7 @@ footer .brand{font-weight:700;color:var(--text)}
 <span class="stat-label">Forever</span>
 </div>
 <div class="stat-item">
-<span class="stat-value">2M+</span>
+<span class="stat-value" id="userCount">2M+</span>
 <span class="stat-label">Users</span>
 </div>
 </div>
@@ -865,7 +879,7 @@ sections.forEach(function(section){navObserver.observe(section);});
 
 /* ── Service Worker registration ── */
 if('serviceWorker' in navigator){
-navigator.serviceWorker.register('/service-worker.js').catch(function(){});
+navigator.serviceWorker.register('/sw.js').catch(function(){});
 }
 
 })();

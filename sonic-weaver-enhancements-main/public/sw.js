@@ -1,6 +1,5 @@
-const CACHE_NAME = 'sonic-weaver-v1';
+const CACHE_NAME = 'sonic-weaver-v2';
 const STATIC_ASSETS = [
-  '/',
   '/manifest.json',
 ];
 
@@ -23,6 +22,23 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   
+  // Navigation requests (HTML pages): ALWAYS network-first
+  // This is critical — prevents cached landing page from causing white screen in PWA
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() => caches.match(e.request).then((cached) => cached || caches.match('/app')))
+    );
+    return;
+  }
+
   // Audio pre-caching: network-first with cache fallback
   if (url.pathname.startsWith('/api/music-track')) {
     e.respondWith(
