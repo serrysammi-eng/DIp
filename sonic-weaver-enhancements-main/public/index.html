@@ -202,23 +202,30 @@ section{position:relative;z-index:1;padding:100px 0}
 .bento-card.large,.bento-card.medium,.bento-card.small{grid-column:span 1;grid-row:span 1}
 }
 
-/* ── SWIMLANE COMPARISON ── */
-.swimlane{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:24px;max-width:1000px;margin:0 auto;align-items:center}
-.swimlane-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;transition:all 350ms var(--ease)}
-.swimlane-card.competitor{opacity:0.5;filter:grayscale(0.8)}
-.swimlane-card.competitor:hover{opacity:0.7;filter:grayscale(0.4)}
-.swimlane-card.hero{border:2px solid var(--magenta);box-shadow:0 0 40px rgba(217,70,239,0.2);position:relative}
-.swimlane-card.hero::before{content:'';position:absolute;inset:-4px;border-radius:24px;background:linear-gradient(135deg,rgba(217,70,239,0.2),rgba(34,211,238,0.1));z-index:-1;filter:blur(20px)}
-.competitor-logo{width:80px;height:80px;margin:0 auto 16px;border-radius:16px;object-fit:contain;background:rgba(245,243,255,0.05);padding:16px}
-.swimlane-name{font-size:18px;font-weight:700;color:var(--text);margin-bottom:16px}
-.swimlane-stats{display:flex;flex-direction:column;gap:8px}
-.swimlane-stat{font-size:14px;color:var(--muted)}
-.swimlane-stat strong{color:var(--text)}
-.hero .swimlane-name{font-size:22px;background:linear-gradient(90deg,var(--magenta),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero .swimlane-stat strong{color:var(--cyan)}
+/* ── COMPARISON TABLE ── */
+.compare-wrapper{max-width:900px;margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:20px;border:1px solid var(--border);background:var(--card)}
+.compare-table{width:100%;border-collapse:collapse;min-width:640px}
+.compare-table th,.compare-table td{padding:14px 16px;text-align:center;font-size:14px;border-bottom:1px solid var(--border)}
+.compare-table thead th{background:rgba(23,21,41,0.95);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);position:sticky;top:0;z-index:2}
+.compare-table thead th:first-child{text-align:left;color:var(--text);font-size:14px;text-transform:none;letter-spacing:0}
+.compare-table thead th.highlight{background:linear-gradient(135deg,rgba(217,70,239,0.15),rgba(34,211,238,0.1));color:var(--text)}
+.compare-table tbody tr:last-child td{border-bottom:none}
+.compare-table tbody tr:hover{background:rgba(245,243,255,0.02)}
+.compare-table td:first-child{text-align:left;font-weight:600;color:var(--text)}
+.compare-table td.highlight{background:rgba(217,70,239,0.04)}
+.compare-table .feature-icon{margin-right:6px}
+.compare-table .yes{color:var(--emerald);font-weight:700;font-size:16px}
+.compare-table .no{color:var(--red);font-weight:700;font-size:16px}
+.compare-table .partial{color:var(--amber);font-size:12px;font-weight:600}
+.compare-table .price-row td{font-weight:800;font-size:16px;border-top:2px solid var(--border);padding:18px 16px}
+.compare-table .price-row .free{font-size:20px;background:linear-gradient(135deg,var(--cyan),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.compare-table .price-row .paid{color:var(--red)}
+.compare-head-logo{display:flex;flex-direction:column;align-items:center;gap:4px}
+.compare-head-logo span{font-size:10px;opacity:0.7}
+.highlight-col{box-shadow:inset 0 0 0 2px rgba(217, 70, 239, 0.2);position:relative}
 @media(max-width:768px){
-.swimlane{grid-template-columns:1fr}
-.swimlane-card.hero{order:-1}
+.compare-wrapper{margin:0 -12px;border-radius:12px}
+.compare-table th,.compare-table td{padding:10px 10px;font-size:13px}
 }
 
 /* ── PRICING CARD ── */
@@ -624,39 +631,116 @@ footer .brand{font-weight:700;color:var(--text)}
 </div>
 </section>
 
-<!-- SWIMLANE COMPARISON -->
+<!-- COMPARISON TABLE -->
 <section id="compare" class="anim">
 <div class="container">
 <h2 class="section-title">Why Sonic Weaver Wins</h2>
-<p class="section-sub">We didn't just build another music app. We built the one that makes everything else obsolete.</p>
-<div class="swimlane">
-<div class="swimlane-card competitor">
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify" class="competitor-logo">
-<div class="swimlane-name">Spotify</div>
-<div class="swimlane-stats">
-<div class="swimlane-stat"><strong>❌</strong> No AI DJ</div>
-<div class="swimlane-stat"><strong>❌</strong> 5-Band EQ Only</div>
-<div class="swimlane-stat"><strong>₹119/mo</strong></div>
-</div>
-</div>
-<div class="swimlane-card hero">
-<div style="font-size:48px;margin-bottom:8px">🎵</div>
-<div class="swimlane-name">Sonic Weaver</div>
-<div class="swimlane-stats">
-<div class="swimlane-stat"><strong>✅</strong> Full AI DJ</div>
-<div class="swimlane-stat"><strong>✅</strong> 10-Band Pro EQ</div>
-<div class="swimlane-stat"><strong>FREE</strong> Forever</div>
-</div>
-</div>
-<div class="swimlane-card competitor">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg" alt="Apple Music" class="competitor-logo">
-<div class="swimlane-name">Apple Music</div>
-<div class="swimlane-stats">
-<div class="swimlane-stat"><strong>❌</strong> No AI DJ</div>
-<div class="swimlane-stat"><strong>❌</strong> Basic EQ</div>
-<div class="swimlane-stat"><strong>₹99/mo</strong></div>
-</div>
-</div>
+<p class="section-sub">Feature-by-feature. No competition.</p>
+<div class="compare-wrapper">
+<table class="compare-table">
+<thead>
+<tr>
+<th>Feature</th>
+<th class="highlight">🎵 Sonic Weaver</th>
+<th><div class="compare-head-logo">Spotify<span>Premium</span></div></th>
+<th><div class="compare-head-logo">Apple Music<span>Individual</span></div></th>
+<th><div class="compare-head-logo">YouTube Music<span>Premium</span></div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="feature-icon">🤖</span>AI DJ Auto-Mixing</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🎧</span>3D Spatial Audio</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🏚️</span>10-Band Pro EQ</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="partial">5-Band</span></td>
+<td><span class="partial">Basic</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🏛️</span>Sound FX Presets</td>
+<td class="highlight"><span class="yes">14</span></td>
+<td><span class="no">0</span></td>
+<td><span class="no">0</span></td>
+<td><span class="no">0</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🎤</span>Synced Lyrics</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="yes">✓</span></td>
+<td><span class="yes">✓</span></td>
+<td><span class="yes">✓</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">📊</span>Real-time Visualizer</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">💓</span>BPM Detection</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🔀</span>Smart Shuffle</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">⚡</span>Highlight Mode</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🌍</span>13 Languages</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="partial">Limited</span></td>
+<td><span class="partial">Limited</span></td>
+<td><span class="partial">Limited</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">📱</span>PWA / No App Store</td>
+<td class="highlight"><span class="yes">✓</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+<td><span class="no">✗</span></td>
+</tr>
+<tr>
+<td><span class="feature-icon">🎨</span>Adaptive UI / Themes</td>
+<td class="highlight"><span class="yes">4 Themes</span></td>
+<td><span class="partial">Dark Only</span></td>
+<td><span class="partial">2</span></td>
+<td><span class="partial">Dark Only</span></td>
+</tr>
+<tr class="price-row">
+<td>💰 Price</td>
+<td class="highlight"><span class="free">FREE</span></td>
+<td><span class="paid">₹119/mo</span></td>
+<td><span class="paid">₹99/mo</span></td>
+<td><span class="paid">₹139/mo</span></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </section>
