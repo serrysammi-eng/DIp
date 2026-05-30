@@ -1019,6 +1019,19 @@ if(progress<1)requestAnimationFrame(step);
 requestAnimationFrame(step);
 }
 
+function animateCurrency(el,start,end,duration){
+var startTime=null;
+function step(ts){
+if(!startTime)startTime=ts;
+var progress=Math.min((ts-startTime)/duration,1);
+var eased=1-Math.pow(1-progress,3);
+var val=Math.floor(eased*(end-start)+start);
+el.textContent='₹'+val.toLocaleString('en-IN');
+if(progress<1)requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+}
+
 /* ── Device detection for install section ── */
 var ua=navigator.userAgent||'';
 var isIOS=/iPhone|iPad|iPod/.test(ua)&&!window.MSStream;
@@ -1173,7 +1186,7 @@ var competitorCounter=document.getElementById('competitorCounter');
 if(competitorCounter){
 var pricingObserver=new IntersectionObserver(function(entries){
 if(entries[0].isIntersecting){
-animateCount(competitorCounter,0,4284,2500);
+    animateCurrency(competitorCounter,0,4284,2500);
 pricingObserver.unobserve(competitorCounter);
 }
 },{threshold:0.5});

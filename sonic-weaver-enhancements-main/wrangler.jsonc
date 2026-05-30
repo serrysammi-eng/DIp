@@ -1,4 +1,4 @@
 {
   "name": "sonic-weaver",
-  "pages_build_output_dir": "./cloudflare-landing"
+  "pages_build_output_dir": "./dist"
 }

@@ -2,7 +2,7 @@
   "name": "Sonic Weaver",
   "short_name": "Sonic Weaver",
   "description": "A cinematic, personalized music streaming experience with AI DJ automixing, real lyrics, and immersive visuals.",
-  "start_url": "/",
+  "start_url": "/app",
   "display": "standalone",
   "background_color": "#171529",
   "theme_color": "#171529",
