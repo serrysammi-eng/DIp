@@ -1,0 +1,15 @@
+{
+  "name": "Sonic Weaver",
+  "short_name": "Sonic Weaver",
+  "description": "The smartest free music app with AI DJ, auto-mixing, and premium sound.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#171529",
+  "theme_color": "#171529",
+  "orientation": "any",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
