@@ -2,6 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Global Error Boundary Catcher to visually display any JS crash rather than a white screen -->
+<script>
+window.addEventListener('error', function(e) {
+  var errDiv = document.getElementById('sw-error-banner') || document.createElement('div');
+  errDiv.id = 'sw-error-banner';
+  errDiv.style.position = 'fixed';
+  errDiv.style.top = '0';
+  errDiv.style.left = '0';
+  errDiv.style.width = '100%';
+  errDiv.style.background = '#ef4444';
+  errDiv.style.color = '#fff';
+  errDiv.style.padding = '12px';
+  errDiv.style.zIndex = '999999';
+  errDiv.style.fontFamily = 'monospace';
+  errDiv.style.fontSize = '12px';
+  errDiv.style.whiteSpace = 'pre-wrap';
+  errDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+  errDiv.textContent = '⚠️ Application Error:\n' + e.message + '\nSource: ' + e.filename + ' (Line ' + e.lineno + ')';
+  document.body.appendChild(errDiv);
+});
+window.addEventListener('unhandledrejection', function(e) {
+  var errDiv = document.getElementById('sw-error-banner') || document.createElement('div');
+  errDiv.id = 'sw-error-banner';
+  errDiv.style.position = 'fixed';
+  errDiv.style.top = '0';
+  errDiv.style.left = '0';
+  errDiv.style.width = '100%';
+  errDiv.style.background = '#ef4444';
+  errDiv.style.color = '#fff';
+  errDiv.style.padding = '12px';
+  errDiv.style.zIndex = '999999';
+  errDiv.style.fontFamily = 'monospace';
+  errDiv.style.fontSize = '12px';
+  errDiv.style.whiteSpace = 'pre-wrap';
+  errDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+  errDiv.textContent = '⚠️ Unhandled Promise Rejection:\n' + e.reason;
+  document.body.appendChild(errDiv);
+});
+</script>
+<script>
+(function(){
+  try {
+    var isStandalone = window.navigator.standalone ||
+      window.matchMedia('(display-mode: standalone)').matches;
+    if (isStandalone) {
+      // Unregister any old service workers that may be caching stale content
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(r) { try { r.update(); } catch(e){} });
+        }).catch(function(){});
+      }
+      window.location.replace('/app');
+    }
+  } catch (e) {
+    console.warn('Standalone redirect failed:', e);
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
 <title>Sonic Weaver — The Smartest Free Music App | AI DJ, Auto Mix, Premium Sound</title>
 <meta name="description" content="AI DJ, Auto Mix, 14 Sound FX, 3D Audio, 10-Band EQ. 100% Free. No App Store. Add to your phone in 1 tap. Better than Spotify, Apple Music & YouTube Music.">
@@ -821,6 +879,19 @@ footer .brand{font-weight:700;color:var(--text)}
 (function(){
 'use strict';
 
+// Polyfill/Fallback for IntersectionObserver to prevent crashes and white pages in unsupported environments
+if (!window.IntersectionObserver) {
+  window.IntersectionObserver = function(callback) {
+    this.observe = function(element) {
+      setTimeout(function() {
+        callback([{ isIntersecting: true, target: element }]);
+      }, 50);
+    };
+    this.unobserve = function() {};
+    this.disconnect = function() {};
+  };
+}
+
 /* ── Intersection Observer for scroll animations ── */
 var animEls = document.querySelectorAll('.anim');
 var observer = new IntersectionObserver(function(entries){
@@ -1044,8 +1115,12 @@ link.classList.add('active');
 sections.forEach(function(section){navObserver.observe(section);});
 
 /* ── Service Worker registration ── */
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('/sw.js').catch(function(){});
+try {
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  }
+} catch(e) {
+  console.warn('Service worker registration failed:', e);
 }
 
 })();

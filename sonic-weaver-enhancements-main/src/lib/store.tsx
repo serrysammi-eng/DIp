@@ -21,9 +21,10 @@ const Ctx = createContext<PrefsCtx | null>(null);
 /** Remove all ad containers with a smooth fade for premium users */
 export function applyPremiumUX() {
   if (typeof window === "undefined") return;
-  if (localStorage.getItem("sonic-weaver:prefs")) {
-    try {
-      const p = JSON.parse(localStorage.getItem("sonic-weaver:prefs")!);
+  try {
+    const raw = localStorage.getItem("sonic-weaver:prefs");
+    if (raw) {
+      const p = JSON.parse(raw);
       if (p?.isPremium === true) {
         document.querySelectorAll('.ad-container, .banner-ad, #ad-gateway')
           .forEach(el => {
@@ -33,8 +34,8 @@ export function applyPremiumUX() {
           });
         clearTimeout((window as unknown as { adGatewayTimer?: ReturnType<typeof setTimeout> }).adGatewayTimer);
       }
-    } catch { /* ignore */ }
-  }
+    }
+  } catch { /* ignore */ }
 }
 
 export function PrefsProvider({ children }: { children: ReactNode }) {
