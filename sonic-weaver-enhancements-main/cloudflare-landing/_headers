@@ -3,3 +3,11 @@
   X-Content-Type-Options: nosniff
   Cache-Control: public, max-age=86400
   Permissions-Policy: interest-cohort=()
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: application/javascript
+
+/manifest.json
+  Cache-Control: no-cache, must-revalidate
+  Content-Type: application/manifest+json

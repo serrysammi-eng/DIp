@@ -1,6 +1,11 @@
-const CACHE_NAME = 'sonic-weaver-landing-v3';
+const CACHE_NAME = 'sonic-weaver-landing-v4';
 const ASSETS = [
-  '/manifest.json'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/preview.jpg'
 ];
 
 self.addEventListener('install', (event) => {
@@ -66,8 +71,12 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cached = await matchCache(event.request);
           if (cached) return cached;
-          // Fallback to direct fetch (which will throw if offline, browser's default behavior)
-          return fetch(event.request);
+          // Last resort: try to return cached index.html for any navigation
+          const fallback = await matchCache(new Request('/index.html'));
+          if (fallback) return fallback;
+          return new Response('<!DOCTYPE html><html><body style="background:#171529;color:#f5f3ff;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif"><div style="text-align:center"><h1>Offline</h1><p>Please check your connection and try again.</p></div></body></html>', {
+            headers: { 'Content-Type': 'text/html' }
+          });
         })
     );
     return;
@@ -95,7 +104,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          return new Response('Network error', { status: 480, statusText: 'Network Error' });
+          return new Response('Network error', { status: 408, statusText: 'Network Error' });
         });
     })()
   );
