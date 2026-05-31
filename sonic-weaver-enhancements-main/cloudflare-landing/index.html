@@ -45,7 +45,8 @@ window.addEventListener('unhandledrejection', function(e) {
 const isStandalone = window.navigator.standalone === true ||
   window.matchMedia('(display-mode: standalone)').matches;
 if (isStandalone) {
-  window.location.replace('https://hiddenserrykori2007.pages.dev/app');
+  // open app in normal browser tab, don't replace the standalone context
+  window.open('https://hiddenserrykori2007.pages.dev/app', '_blank');
 }
 </script>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
@@ -63,7 +64,7 @@ if (isStandalone) {
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sonic Weaver — Free AI Music App">
 <meta name="twitter:description" content="AI DJ, Auto Mix, 14 Sound FX, 3D Audio. Free forever.">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <!-- META PIXEL CODE HERE -->
